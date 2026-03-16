@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from .managers import LoanManager
+
 
 class Author(models.Model):
 	name = models.CharField(max_length=200)
@@ -62,6 +64,8 @@ class Loan(models.Model):
 	date_due = models.DateField()
 	date_returned = models.DateField(null=True, blank=True)
 	status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+
+	objects = LoanManager()
 
 	def __str__(self):
 		return f"Loan: {self.book.title} to {self.member.user.username}"
